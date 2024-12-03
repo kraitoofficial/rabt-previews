@@ -1,0 +1,70 @@
+RABT COMMERCIAL LICENSE AGREEMENT
+
+Last Updated: December 1, 2024
+
+This License Agreement ("Agreement") is a legal agreement between you (either an individual or a single entity) and Kraito ("Licensor") for the Rabt Contact Directory software product ("Software").
+
+1. LICENSE TYPES
+
+   1.1 REGULAR LICENSE (SINGLE USE)
+       - Grants the right to use the Software on a single installation
+       - No modification rights to the source code
+       - Includes standard support services
+       - Entitled to updates within the purchased version
+       - Non-transferable
+       - Cannot resell or redistribute the Software
+
+   1.2 EXTENDED LICENSE
+       - Grants the right to use the Software on multiple installations
+       - Includes customization rights (with mutual written agreement)
+       - Priority support services
+       - Free version updates
+       - Access to consultation services
+       - Cannot resell or redistribute the Software without written permission
+
+2. RESTRICTIONS
+
+   2.1 You may not:
+       - Reverse engineer, decompile, or disassemble the Software
+       - Remove any copyright or proprietary notices
+       - Use the Software in violation of any applicable laws
+       - Transfer, sublicense, or resell the Software
+       - Modify the Software (Regular License only)
+
+3. INTELLECTUAL PROPERTY
+
+   3.1 The Software is protected by copyright laws and international treaty provisions.
+   3.2 All intellectual property rights remain with the Licensor.
+
+4. SUPPORT AND UPDATES
+
+   4.1 Regular License:
+       - Email support during business hours
+       - Bug fixes and security updates
+       - Updates within the purchased version
+
+   4.2 Extended License:
+       - Priority email and phone support
+       - Bug fixes and security updates
+       - Free version updates
+       - Consultation services for customization
+
+5. TERMINATION
+
+   5.1 This license will terminate automatically if you fail to comply with its terms.
+   5.2 Upon termination, you must cease all use of the Software and destroy all copies.
+
+6. WARRANTY AND LIABILITY
+
+   6.1 The Software is provided "as is" without warranty of any kind.
+   6.2 In no event shall the Licensor be liable for any damages arising from the use
+       or inability to use the Software.
+
+7. GOVERNING LAW
+
+   This Agreement shall be governed by the laws of [Jurisdiction].
+
+For licensing inquiries, customization requests, or support:
+[Contact Information]
+
+ 2024-2025 Kraito. All rights reserved.
