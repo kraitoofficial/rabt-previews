@@ -14,7 +14,7 @@ Rabt is a contact management system designed for enterprise-scale organizations.
 
 ## Business Applications
 
-### 1. Corporate ContactDirectory
+### 1. Corporate Contact Directory
 
 - Employee contact management
 - Department organization
