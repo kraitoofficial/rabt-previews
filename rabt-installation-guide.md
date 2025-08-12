@@ -98,6 +98,88 @@
    - Locate the h1 element with "Rabt Contact Directory"
    - Replace with your desired application name
 
+#### Organization Settings (Super Admin)
+
+Use Settings to configure organization details used across invoices and emails.
+
+1. Sign in as a Super Admin
+2. Open `Admin → Settings` or visit `/admin/settings`
+3. Fill in Organization's Information:
+   - Legal/Organization Name, Address, Email, Phone, Website
+   - Currency (e.g., USD), Timezone
+   - Invoice settings: `invoicePrefix` (e.g., "INV-"), `invoiceNotes`, `paymentOptionsText`
+   - Reminder settings: `reminderEnabled`, `dueReminderDays`, `reminderCron` or `reminderIntervalHours`
+   - Branding: `logoUrl`
+4. Save to persist in `OrganizationSettings`
+
+Notes:
+- Only Super Admin can update Settings. Reads are allowed for Admin/Staff where needed.
+- These settings are used to auto-generate invoice numbers, render branding, and control reminder jobs.
+
+#### Invoices
+
+Prerequisites:
+- SMTP configured (see Email Server Configuration above)
+- Organization settings configured (prefix, currency, branding)
+- User role: Staff/Admin/Super Admin
+
+Using Invoices:
+1. Open `Invoices` from the sidebar or visit `/invoices`
+2. Create an invoice with line items (qty, unit price, per-line tax%)
+3. Issue/Due dates: set explicitly; reminders and overdue are handled automatically if enabled
+4. Send via Email: open invoice → Send Email; customize subject/message
+5. Print View: open invoice → Print (uses built-in print page)
+
+Filtering & Search:
+- Search by invoice number or related contact fields
+- Filter by Status, Issuer, and Organization
+
+Statuses:
+- `draft`, `due`, `sent`, `paid`, `overdue`, `void`
+
+#### Invoice Reminders & Cron
+
+The system can automatically:
+- Email reminders before an invoice is due
+- Mark invoices as “Overdue” after the due date
+
+You choose when reminders run in two simple ways:
+1) Easy option (recommended): Every N hours
+    - Go to `Admin → Settings`
+    - Set “Reminder Interval (hours)” to a number, e.g. 24 (every day) or 12 (twice a day)
+2) Specific times (schedule): Use a schedule code
+    - Go to `Admin → Settings`
+    - Set “Reminder Schedule” to one of these examples:
+      - Every day at 9:00 AM: `0 9 * * *`
+      - Every day at 9:00 AM and 5:00 PM: `0 9,17 * * *`
+      - Every Monday at 8:00 AM: `0 8 * * 1`
+      - Every 6 hours: `0 */6 * * *`
+
+Timezone:
+- The job uses your configured timezone (see `INVOICE_REMINDER_TZ`) so “9:00 AM” runs in your local time.
+
+Environment variables (optional):
+- `INVOICE_REMINDER_ENABLED` — turn reminders on/off (true by default)
+- `INVOICE_REMINDER_CRON` — schedule code if you’re not using Settings
+- `INVOICE_REMINDER_TZ` — your timezone (e.g., `UTC`, `Asia/Dhaka`)
+- `CRON_TOKEN` — a secret token used for the manual trigger below
+
+Which setting takes effect?
+- If you set a schedule or interval in `Admin → Settings`, that will be used.
+- Otherwise, the app falls back to environment variables.
+
+Manual trigger endpoint (for external cron or testing):
+
+```bash
+curl -X POST \
+  -H "X-Cron-Token: $CRON_TOKEN" \
+  https://your-domain.com/api/admin/invoices/reminders
+```
+
+The job will:
+- Send reminder emails to upcoming-due invoices (based on `dueReminderDays`)
+- Auto-mark invoices with past dueDate from `due` → `overdue`
+
 ## Deployment Methods
 
 ### Method 1: Vercel Deployment

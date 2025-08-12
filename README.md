@@ -1,8 +1,8 @@
-# Rabt | Organization Contact Directory
+# Rabt | Organization Contact & Invoice Management System
 
 Developed by Kraito
 
-Rabt is a contact management system designed for enterprise-scale organizations. It provides a secure, efficient, user-friendly platform for managing professional contacts, organizational directories, and personal networks. The solution emphasizes role-based access control, advanced contact management features, and seamless integration capabilities.
+Rabt is a contact & invoice management system designed for enterprise-scale organizations. It provides a secure, efficient, and user-friendly platform for managing professional contacts, organizational directories, and personal networks. The solution emphasizes role-based access control, advanced contact management features, and seamless integration capabilities—enabling streamlined invoice generation, management, and secure sharing with contacts.
 
 ## Core Value Proposition
 
@@ -10,11 +10,13 @@ Rabt is a contact management system designed for enterprise-scale organizations.
 - Role-based access control for organizational hierarchy
 - Seamless contact sharing and synchronization
 - Advanced search and filtering capabilities
+- Invoice branding, design, and management
+- Invoice emailing and smart notification
 - Multi-platform accessibility and responsive design
 
 ## Business Applications
 
-### 1. Corporate Contact Directory
+### 1. Corporate ContactDirectory
 
 - Employee contact management
 - Department organization
@@ -25,11 +27,13 @@ Rabt is a contact management system designed for enterprise-scale organizations.
 - Client database management
 - Quick contact access
 - Customer relationship management
+- Centralized invoice management
 
 ### 3. Professional Networking
 
 - Personal contact organization
 - Business card digitization
+- All in one invoice solution
 - Network relationship mapping
 
 ## Feature Architecture
@@ -93,6 +97,8 @@ Rabt is a contact management system designed for enterprise-scale organizations.
 | Contact Management |  -   |   -   |   ✓   |      ✓      |
 | User Management    |  -   |   -   |   ✓   |      ✓      |
 | System Logs        |  -   |   -   |   -   |      ✓      |
+| Invoices           |  -   |   ✓   |   ✓   |      ✓      |
+| Settings           |  -   |   -   |   -   |      ✓      |
 
 ### 3. Advanced Features
 
@@ -125,7 +131,28 @@ Rabt is a contact management system designed for enterprise-scale organizations.
   - Email notifications
   - Role change communications
 
-### 4. User Experience
+### 4. Invoice Management
+
+- Invoice Lifecycle
+  - Statuses: Draft, Due, Sent, Paid, Overdue, Void
+  - Issue date and due date
+  - Reminders and auto-mark overdue
+- Itemization & Tax
+  - Multiple line items with quantity and unit price
+  - Per-line tax percentage with automatic tax total
+  - Subtotal, tax, and total
+- Numbering & Branding
+  - Auto-incrementing invoice numbers with configurable prefixes
+  - Branded invoice view using organization details (logo, address, etc.)
+- Email Sharing
+  - Email delivery with customizable subject and message
+- Permissions & Audit
+  - Role-based access (Staff/Admin/Super Admin)
+  - Activity log for key actions (create, send, reminders)
+- Filtering
+  - Search and filters by status, issuer, and organization
+
+### 5. User Experience
 
 - Responsive Design
   - Mobile-first approach
