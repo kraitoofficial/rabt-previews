@@ -1,603 +1,324 @@
-# Comprehensive Rabt Deployment Guide
+# Installation Guide - Rabt - CRM, Inventory, Billing & File Management System
+
+> **Rabt v3.0.0:** Fully unified Supabase architecture (PostgreSQL, Supabase Auth, Supabase Storage).
+
+---
 
 ## Initial Setup
 
-### 1. System Requirements Verification
+### 1. System Requirements
 
-1. Check Node.js version:
-   ```bash
-   node --version  # Must be v20 or later
-   ```
-2. Verify package manager installation:
-   ```bash
-   npm --version  # or
-   pnpm --version
-   ```
-
-### 2. MongoDB Setup
-
-1. Choose deployment option:
-
-   - **Option A: Local MongoDB**
-
-     1. Install MongoDB Community Edition
-     2. Start MongoDB service
-     3. Create database and user
-     4. Get connection string in format: `mongodb://username:password@localhost:27017/database`
-
-   - **Option B: MongoDB Atlas**
-     1. Create account at mongodb.com
-     2. Create new cluster (M2 recommended for <100 users)
-     3. Set up database access (username/password)
-     4. Whitelist IP addresses
-     5. Get connection string from Atlas dashboard
-
-### 3. Email Server Configuration
-
-1. **Gmail Setup** (Recommended for starting):
-   1. Enable 2-Factor Authentication
-   2. Generate App Password
-   3. Use following settings:
-      ```
-      SMTP_HOST=smtp.gmail.com
-      SMTP_PORT=587
-      SMTP_USER=your-gmail@gmail.com
-      SMTP_PASSWORD=your-app-password
-      ```
-
-### 4. OAuth Configuration
-
-1. **Google OAuth**:
-
-   1. Go to Google Cloud Console
-   2. Create new project
-   3. Enable OAuth 2.0
-   4. Configure OAuth consent screen
-   5. Create credentials
-   6. Save Client ID and Secret
-
-2. **Facebook OAuth**:
-   1. Go to Facebook Developers
-   2. Create new app
-   3. Add Facebook Login
-   4. Configure OAuth settings
-   5. Save App ID and Secret
-
-## Customization
-
-### 5. Customizing Your Installation
-
-#### Logo Customization
-
-1. **Logo Requirements**:
-
-   - Container size: 128px × 32px (w-32 h-8)
-   - Aspect ratio: 4:1 (recommended)
-   - Minimum resolution: 256px × 64px (2x for retina displays)
-   - Optimal resolution: 512px × 128px (4x)
-   - Format: Provide both light and dark versions for theme support
-
-2. **Logo Placement**:
-
-   - Place your logo files in the `public/logo` directory
-   - Recommended filenames:
-     ```
-     logo-light.png  # for light theme
-     logo-dark.png   # for dark theme
-     ```
-
-3. **Update Header Component**:
-   - Navigate to `components/theme/Header.tsx`
-   - Update the Image `src` prop with your logo paths
-   - The Next.js Image component with `fill` and `object-contain` will automatically handle scaling
-
-#### Splash Screen Customization
-
-1. To change the loading screen title:
-   - Open `components/theme/SplashScreen.tsx`
-   - Locate the h1 element with "Rabt Contact Directory"
-   - Replace with your desired application name
-
-#### Organization Settings (Super Admin)
-
-Use Settings to configure organization details used across invoices and emails.
-
-1. Sign in as a Super Admin
-2. Open `Admin → Settings` or visit `/admin/settings`
-3. Fill in Organization's Information:
-   - Legal/Organization Name, Address, Email, Phone, Website
-   - Currency (e.g., USD), Timezone
-   - Invoice settings: `invoicePrefix` (e.g., "INV-"), `invoiceNotes`, `paymentOptionsText`
-   - Reminder settings: `reminderEnabled`, `dueReminderDays`, `reminderCron` or `reminderIntervalHours`
-   - Branding: `logoUrl`
-4. Save to persist in `OrganizationSettings`
-
-Notes:
-- Only Super Admin can update Settings. Reads are allowed for Admin/Staff where needed.
-- These settings are used to auto-generate invoice numbers, render branding, and control reminder jobs.
-
-#### Invoices
-
-Prerequisites:
-- SMTP configured (see Email Server Configuration above)
-- Organization settings configured (prefix, currency, branding)
-- User role: Staff/Admin/Super Admin
-
-Using Invoices:
-1. Open `Invoices` from the sidebar or visit `/invoices`
-2. Create an invoice with line items (qty, unit price, per-line tax%)
-3. Issue/Due dates: set explicitly; reminders and overdue are handled automatically if enabled
-4. Send via Email: open invoice → Send Email; customize subject/message
-5. Print View: open invoice → Print (uses built-in print page)
-
-Filtering & Search:
-- Search by invoice number or related contact fields
-- Filter by Status, Issuer, and Organization
-
-Statuses:
-- `draft`, `due`, `sent`, `paid`, `overdue`, `void`
-
-#### Invoice Reminders & Cron
-
-The system can automatically:
-- Email reminders before an invoice is due
-- Mark invoices as “Overdue” after the due date
-
-You choose when reminders run in two simple ways:
-1) Easy option (recommended): Every N hours
-    - Go to `Admin → Settings`
-    - Set “Reminder Interval (hours)” to a number, e.g. 24 (every day) or 12 (twice a day)
-2) Specific times (schedule): Use a schedule code
-    - Go to `Admin → Settings`
-    - Set “Reminder Schedule” to one of these examples:
-      - Every day at 9:00 AM: `0 9 * * *`
-      - Every day at 9:00 AM and 5:00 PM: `0 9,17 * * *`
-      - Every Monday at 8:00 AM: `0 8 * * 1`
-      - Every 6 hours: `0 */6 * * *`
-
-Timezone:
-- The job uses your configured timezone (see `INVOICE_REMINDER_TZ`) so “9:00 AM” runs in your local time.
-
-Environment variables (optional):
-- `INVOICE_REMINDER_ENABLED` — turn reminders on/off (true by default)
-- `INVOICE_REMINDER_CRON` — schedule code if you’re not using Settings
-- `INVOICE_REMINDER_TZ` — your timezone (e.g., `UTC`, `Asia/Dhaka`)
-- `CRON_TOKEN` — a secret token used for the manual trigger below
-
-Which setting takes effect?
-- If you set a schedule or interval in `Admin → Settings`, that will be used.
-- Otherwise, the app falls back to environment variables.
-
-Manual trigger endpoint (for external cron or testing):
+- **Node.js:** v20.x or later (or **Bun** v1.4.x or later)
+- **Package Manager:** `bun`, `npm`, or `pnpm`
+- **Database:** Supabase project (Free or Pro tier at [supabase.com](https://supabase.com)) or Supabase CLI for local development
 
 ```bash
-curl -X POST \
-  -H "X-Cron-Token: $CRON_TOKEN" \
-  https://your-domain.com/api/admin/invoices/reminders
+# Verify your runtime version
+node --version  # Must be v20 or later
+# or
+bun --version   # Must be v1.4 or later
 ```
 
-The job will:
-- Send reminder emails to upcoming-due invoices (based on `dueReminderDays`)
-- Auto-mark invoices with past dueDate from `due` → `overdue`
+---
+
+### 2. Supabase Setup (Postgres, Auth & Storage)
+
+1. Create a new project at [supabase.com](https://supabase.com) (or start a local instance via `bun run db:start` / `npx supabase start`).
+2. Run database migrations to set up the complete schema, storage buckets (`branding`, `files`, `invoices`, `pdf-jobs`), and Row-Level Security policies:
+   ```bash
+   bun run db:reset
+   # or
+   npx supabase db reset
+   ```
+3. Copy API credentials from your Supabase Dashboard (**Project Settings → API**):
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (if generated)
+   - `SUPABASE_SERVICE_ROLE_KEY`
+
+---
+
+### 3. Email Configuration (SMTP)
+
+Configured for invoice emailing, payment reminders, and administrative alerts (user sign-in/verification emails are handled directly by Supabase Auth).
+
+```env
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your-smtp-user
+SMTP_PASSWORD=your-smtp-password
+SMTP_FROM="Your Brand Name <noreply@yourdomain.com>"
+SMTP_SECURE=false  # false for TLS (port 587), true for SSL (port 465)
+```
+
+**Gmail Quick Start:**
+
+```env
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-gmail@gmail.com
+SMTP_PASSWORD=your-google-app-password  # Generate via Google Account → Security → 2-Step Verification → App Passwords
+SMTP_FROM="Rabt <your-gmail@gmail.com>"
+SMTP_SECURE=false
+```
+
+---
+
+### 4. OAuth Configuration (Optional)
+
+Configure Google or Facebook OAuth providers in your Supabase Dashboard under **Authentication → Providers**:
+- Add your Redirect URL: `https://<your-project-ref>.supabase.co/auth/v1/callback`
+- In your application, authentication redirects through `/api/auth/callback`.
+
+---
+
+### 5. Environment Variables Reference
+
+Create a `.env.local` file by copying `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Description | Example / Default |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase API URL | `https://xyz.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client anon key | `ey...` |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Optional Supabase publishable key | `sb_publishable_...` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Service Role key (private) | `ey...` |
+| `NEXT_PUBLIC_APP_URL` | Application root canonical URL | `https://yourdomain.com` |
+| `NODE_ENV` | Environment mode | `production` / `development` |
+| `DB_ADMIN_EMAIL` | Administrative alert email recipient | `admin@example.com` |
+| `SMTP_HOST` | Outbound SMTP server hostname | `smtp.gmail.com` |
+| `SMTP_PORT` | SMTP port (587 TLS or 465 SSL) | `587` |
+| `SMTP_USER` | SMTP username | `user@example.com` |
+| `SMTP_PASSWORD` | SMTP password / app password | `secret-password` |
+| `SMTP_FROM` | Outbound sender name and address | `"Rabt <noreply@domain.com>"` |
+| `SMTP_SECURE` | Use SSL direct socket connection | `false` |
+| `CORS_ORIGINS` | Allowed origins for cross-origin requests | `https://yourdomain.com` |
+| `CRON_SECRET` | Secret token to authenticate `/api/cron` | `your-random-cron-secret` |
+| `LOG_RETENTION_DAYS` | Daily cron retention window for audit logs | `90` |
+| `BROWSER_WS_ENDPOINT` | Optional Browserless.io / headless browser URL | `wss://chrome.browserless.io?token=...` |
+| `PUPPETEER_EXECUTABLE_PATH` | Path to host Chromium executable (Docker/VPS) | `/usr/bin/chromium-browser` |
+
+---
+
+## Quick Start (Development)
+
+```bash
+# 1. Install dependencies
+bun install
+# or: npm install
+
+# 2. Seed demo dataset (contacts, leads, products, sample invoices)
+bun run seed:demo
+
+# 3. Start development server with Turbopack
+bun run dev
+# or: npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to open the application.
+
+---
 
 ## Deployment Methods
 
-### Method 1: Vercel Deployment
+### Method 1: Vercel (Recommended for Serverless)
 
-#### Pre-deployment Setup
-
-1. Install Vercel CLI:
-
-   ```bash
-   npm i -g vercel
-   ```
-
-2. Create `.env` file with all required variables
-3. Verify project structure follows Vercel requirements
-
-#### Deployment Steps
-
-1. Login to Vercel:
-
-   ```bash
-   vercel login
-   ```
-
-2. Initial deployment:
-
-   ```bash
-   vercel
-   ```
-
-3. Configure environment variables:
-
-   1. Open Vercel dashboard
-   2. Go to Project Settings
-   3. Navigate to Environment Variables
-   4. Import `.env` file or add manually
-   5. Verify all required variables are set
-
-4. Production deployment:
+1. Push your repository to GitHub / GitLab.
+2. Import the project into the [Vercel Dashboard](https://vercel.com).
+3. In **Project Settings → Environment Variables**, populate all variables from `.env.example`.
+4. Deploy:
    ```bash
    vercel --prod
    ```
+> **Note on Cron:** Vercel automatically detects `vercel.json` and schedules `GET /api/cron` daily at `06:00 UTC`. Set the `CRON_SECRET` variable in Vercel to authorize the scheduled job.
 
-### Method 2: Docker Deployment
+---
 
-#### Pre-deployment Setup
+### Method 2: Docker & Docker Compose
 
-1. Install Docker:
+Rabt includes a production-ready multi-stage [Dockerfile](Dockerfile) with Bun and standalone Node.js runner with preconfigured Chromium for PDF rendering.
 
-   ```bash
-   # Ubuntu
-   curl -fsSL https://get.docker.com -o get-docker.sh
-   sudo sh get-docker.sh
-
-   # Verify installation
-   docker --version
-   ```
-
-#### Configuration Files
-
-1. Create `docker-compose.yml`:
+**docker-compose.yml:**
 
 ```yaml
 services:
   app:
-    image: ghcr.io/kraito/rabt:latest
+    image: ghcr.io/kraito/rabt-supabase:latest
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-https://your-project.supabase.co}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-your-anon-key}
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:-}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
     ports:
       - "3000:3000"
     environment:
-      # Database
-      MONGODB_URI: "mongodb://username:password@localhost:27017/database"
+      NEXT_PUBLIC_SUPABASE_URL: "https://your-project.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "your-anon-key"
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ""
+      SUPABASE_SERVICE_ROLE_KEY: "your-service-role-key"
+      NEXT_PUBLIC_APP_URL: "https://yourdomain.com"
       DB_ADMIN_EMAIL: "admin@example.com"
-
-      # Email Configuration
       SMTP_HOST: "smtp.example.com"
       SMTP_PORT: "587"
       SMTP_USER: "your-smtp-user"
       SMTP_PASSWORD: "your-smtp-password"
-      SMTP_FROM: "noreply@example.com"
-
-      # NextAuth Configuration
-      NEXTAUTH_URL: "http://localhost:3000"
-      NEXTAUTH_SECRET: "your-nextauth-secret"
-
-      # Google OAuth
-      GOOGLE_CLIENT_ID: ""
-      GOOGLE_CLIENT_SECRET: ""
-
-      # Facebook OAuth
-      FACEBOOK_CLIENT_ID: ""
-      FACEBOOK_CLIENT_SECRET: ""
-
-      # Application
+      SMTP_FROM: "Rabt <noreply@yourdomain.com>"
+      SMTP_SECURE: "false"
+      CRON_SECRET: "your-cron-secret"
+      LOG_RETENTION_DAYS: "90"
+      CORS_ORIGINS: "https://yourdomain.com"
       NODE_ENV: "production"
-      PORT: "3000"
-
-      # Security
-      CORS_ORIGINS: "https://yourdomain.com,https://api.yourdomain.com"
     restart: unless-stopped
-    networks:
-      - rabt-network
-    volumes:
-      - rabt-uploads:/app/public/uploads
-      - rabt-data:/app/data
-      - rabt-cache:/app/.next/cache
-
-networks:
-  rabt-network:
-    driver: bridge
-
-volumes:
-  rabt-uploads:
-  rabt-data:
-  rabt-cache:
 ```
 
-2. Create `Dockerfile`:
+Build and launch container:
 
-```dockerfile
-# Stage 1: Dependencies
-FROM node:20-alpine AS deps
-LABEL org.opencontainers.image.source="https://github.com/kraito/rabt"
-LABEL org.opencontainers.image.description="Rabt Organization Contact Directory Developed by Kraito"
-LABEL org.opencontainers.image.licenses="Commercial License"
-
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-
-COPY package.json package-lock.json* ./
-COPY .env .env.local* ./
-
-RUN npm install
-
-# Stage 2: Builder
-FROM node:20-alpine AS builder
-WORKDIR /app
-
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
-ENV SKIP_ENV_VALIDATION=1
-ENV SKIP_SMTP_VERIFY=true
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/.env* ./
-COPY . .
-
-RUN node --max_old_space_size=4096 node_modules/.bin/next build
-
-# Stage 3: Runner
-FROM node:20-alpine AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/.env* ./
-
-RUN mkdir -p .next/cache
-RUN chown -R nextjs:nodejs .next
-RUN chmod -R 755 .next
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-CMD ["node", "server.js"]
+```bash
+docker compose up -d --build
+docker compose logs -f app
 ```
 
-#### Deployment Steps
+---
 
-1. Start the containers:
+### Method 3: Linux VPS with PM2
 
-   ```bash
-   docker-compose up -d
-   ```
+Rabt supports standalone execution via PM2 using the included `ecosystem.config.js`:
 
-2. Verify deployment:
-   ```bash
-   docker-compose ps
-   docker-compose logs
-   ```
+```bash
+# 1. Install PM2 globally
+npm install -g pm2
 
-### Method 3: PM2 Deployment
+# 2. Install dependencies and build standalone bundle
+bun install
+bun run build
 
-#### Installation & Setup
+# 3. Start PM2 cluster process
+pm2 start ecosystem.config.js --env production
 
-1. Install PM2:
+# 4. Save PM2 list and configure system startup
+pm2 save
+pm2 startup
 
-   ```bash
-   npm install -g pm2
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Build application:
-   ```bash
-   npm run build
-   ```
-
-#### Configuration
-
-Create `ecosystem.config.js`:
-
-```javascript
-module.exports = {
-  apps: [
-    {
-      name: "rabt",
-      script: "./node_modules/next/dist/bin/next",
-      args: "start",
-      //instances: 'max',
-      exec_mode: "cluster",
-      autorestart: true,
-      watch: false,
-      max_memory_restart: "1G",
-      env_production: {
-        NODE_ENV: "production",
-        PORT: 3000,
-      },
-      env_development: {
-        NODE_ENV: "development",
-        PORT: 3000,
-      },
-    },
-  ],
-};
+# 5. Monitor logs
+pm2 logs rabt
 ```
 
-#### Deployment Steps
+---
 
-1. Start application:
+## Post-Deployment Configuration
 
-   ```bash
-   pm2 start ecosystem.config.js --env production
-   ```
+### Initial Super Admin Setup
 
-2. Setup auto-restart:
+For zero-trust security, all newly registered accounts default to the `User` role. To establish your initial `Super Admin` account:
 
-   ```bash
-   pm2 startup
-   pm2 save
-   ```
+1. Register an account through the application sign-up page (`/auth` or `/`).
+2. Open your **Supabase Dashboard → SQL Editor** (or run via `supabase` CLI):
 
-3. Monitor application:
-   ```bash
-   pm2 monit
-   pm2 logs rabt
-   ```
+```sql
+UPDATE public.profiles
+SET role = 'Super Admin', is_verified = true
+WHERE email = 'your-admin-email@example.com';
+```
 
-## Troubleshooting Guide
+> **Note on `DB_ADMIN_EMAIL`:** The `DB_ADMIN_EMAIL` environment variable configures the administrative recipient for payment reminders, system alerts, and billing notifications. For security, it does not automatically elevate database privileges upon login.
 
-### Database Issues
+---
 
-1. Connection failures:
-   ```bash
-   # Test MongoDB connection
-   mongosh "your-connection-string"
-   ```
-   - Check IP whitelist
-   - Verify credentials
-   - Test network connectivity
+### Organization Settings
 
-### Build Failures
+Log in as Super Admin and visit `/admin/settings` to configure:
 
-1. Clear build cache:
+1. **Organization Info:** Company name, legal name, address, email, phone, website, tax registration info.
+2. **Branding:** Site title, favicon, and Light/Dark theme logos (rendered across the app header and PDF invoices).
+3. **Invoice Settings:** Default currency (USD, EUR, GBP, BDT, etc.), invoice prefix (e.g., `INV-`), payment terms in days, payment options text, and default notes.
+4. **Reminder Settings:** Automated due reminder threshold (days before due date), reminder intervals, and timezone.
+5. **Lead Settings:** Custom sales pipeline stages and priority levels.
+6. **Public Contact Page:** Admin contact details, social links, and department heads displayed on `/contact`.
 
-   ```bash
-   rm -rf .next
-   npm run build
-   ```
+---
 
-2. Check dependency conflicts:
-   ```bash
-   npm ls
-   ```
+## Feature Configuration
 
-### Runtime Errors
+### Consolidated Daily Cron (`/api/cron`)
 
-1. Check logs based on deployment method:
+Rabt includes a unified background maintenance route at `/api/cron` that performs all daily operations in a single run:
+1. **Invoice Reminders & Overdue Transitions:** Identifies pending invoices, marks overdue records, and emails clients reminder notices.
+2. **Supabase Inactivity Keep-Alive:** Pings the database to prevent free-tier project auto-pausing.
+3. **Disk & Audit Log Cleanup:** Prunes audit log entries older than `LOG_RETENTION_DAYS` (default: 90 days) and deletes stale temporary PDF export jobs.
 
-   ```bash
-   # Vercel
-   vercel logs
+**Triggering Cron Manually or via External Scheduler:**
 
-   # Docker
-   docker logs rabt
+```bash
+# Using Bearer token authorization:
+curl -X GET https://yourdomain.com/api/cron \
+  -H "Authorization: Bearer $CRON_SECRET"
 
-   # PM2
-   pm2 logs rabt
-   ```
+# Or via X-Cron-Token header:
+curl -X POST https://yourdomain.com/api/cron \
+  -H "X-Cron-Token: $CRON_SECRET"
+```
 
-2. Common fixes:
-   - Restart application
-   - Verify environment variables
-   - Check system resources
-   - Monitor memory usage
+---
 
-### Performance Issues
+### Supabase Storage Buckets
 
-1. Monitor metrics:
+Storage buckets are initialized automatically by migrations:
+- `branding`: Public read access for company logos and favicons.
+- `files`: Authenticated private cloud file library.
+- `invoices`: Generated PDF invoice archives.
+- `pdf-jobs`: Temporary processing bucket for PDF manipulation jobs.
 
-   ```bash
-   # PM2
-   pm2 monit
+---
 
-   # Docker
-   docker stats rabt
-   ```
+### PDF Tools Suite
 
-2. Optimization steps:
-   - Scale instances
-   - Adjust memory limits
-   - Enable caching
-   - Optimize database queries
+Available at `/utilities/pdf-tools`:
+- **Merge PDFs:** Drag-and-drop combine multiple PDF documents.
+- **Split PDFs:** Page-range extraction and multi-part splitting.
+- **Rearrange & Rotate:** Reorder, rotate 90°/180°/270°, duplicate, or delete individual pages.
+- **Document Conversion:** Convert documents and images directly to PDF using Puppeteer Chromium or `sharp`.
+
+---
+
+## Troubleshooting & Maintenance
+
+### Database Connection Verification
+
+```bash
+npx supabase status
+```
+- Verify that `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are correct.
+- Verify migrations were applied via `bun run db:reset`.
+
+### Clean Rebuild
+
+```bash
+rm -rf .next node_modules
+bun install
+bun run build
+```
+
+### Common Issues
+
+- **Authentication Errors:** Check Supabase Project Settings → Auth → URL Configuration and confirm Site URL and Redirect URLs match your domain.
+- **Email Delivery Fails:** Test SMTP credentials using TLS (`SMTP_PORT=587`, `SMTP_SECURE=false`) or SSL (`SMTP_PORT=465`, `SMTP_SECURE=true`). For Gmail, make sure to use an App Password.
+- **PDF Generation Timeout:** On low-memory environments (<2GB RAM), ensure Docker/VPS has swap memory enabled, or configure `BROWSER_WS_ENDPOINT` to offload rendering to Browserless.io.
+- **File Upload Errors:** Confirm storage bucket RLS policies are applied and `SUPABASE_SERVICE_ROLE_KEY` is set.
+
+---
 
 ## Security Checklist
 
-- [ ] Environment variables properly set
-- [ ] CORS origins configured
-- [ ] OAuth credentials secured
-- [ ] Database access restricted
-- [ ] SMTP credentials protected
-- [ ] SSL/TLS enabled
-- [ ] Regular security updates
-- [ ] Proper error handling
-
-## Super Admin Setup
-
-### Method 1: Using MongoDB Compass
-
-1. Open MongoDB Compass and connect to your database
-2. Navigate to the `users` collection
-3. Find the user you want to make Super Admin
-4. Click Edit Document
-5. Change the `role` field value from `"User"` to `"Super Admin"`
-6. Click Save
-
-Example document modification:
-
-```json
-{
-  "_id": ObjectId("..."),
-  "name": "Admin User",
-  "email": "admin@example.com",
-  "role": "Super Admin",  // Change this field
-  "isVerified": true,
-  // ... other fields
-}
-```
-
-### Method 2: Development Server with OAuth
-
-1. Stop the production server if running
-2. Modify the OAuth sign-in code in `route.ts` temporarily:
-
-```typescript
-const newUser = await User.createWithoutValidation({
-  name: user.name || profile?.name || "User",
-  email: user.email,
-  role: "Super Admin", // Change this from "User" to "Super Admin"
-  isVerified: true,
-  oauth: {
-    [account.provider]: {
-      providerAccountId: account.providerAccountId,
-      accessToken: account.access_token,
-      refreshToken: account.refresh_token,
-    },
-  },
-});
-```
-
-3. Start the development server:
-
-```bash
-npm run dev
-```
-
-4. Sign in using Google or Facebook OAuth
-5. Verify in MongoDB that the user was created with Super Admin role
-6. Revert the code change back to `"User"` role
-7. Restart the production server
-
-### Method 3: Using MongoDB Shell
-
-1. Connect to your MongoDB instance:
-
-```bash
-mongosh "your-connection-string"
-```
-
-2. Run the following command:
-
-```javascript
-db.users.updateOne(
-  { email: "admin@example.com" },
-  { $set: { role: "Super Admin" } }
-);
-```
-
-### Security Notes
-
-- Create only one Super Admin account initially
-- Document the Super Admin email for organizational records
-- Change the role back to "User" in the code after creating the Super Admin
-- Consider implementing an audit log for role changes
-- Regularly review user roles and permissions
+- [ ] Strong random `CRON_SECRET` configured in production
+- [ ] Database access protected via Supabase Row-Level Security (RLS)
+- [ ] Initial Super Admin account role elevated in `public.profiles`
+- [ ] Outbound alerts email configured via `DB_ADMIN_EMAIL`
+- [ ] CORS origins configured to production domain
+- [ ] SSL/TLS certificate active on production domain
+- [ ] Service role keys kept strictly on the server (`.env.local`) and never exposed in client bundles

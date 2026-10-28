@@ -1,0 +1,268 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Michael Thompson
+N:Thompson;Michael;;;
+ORG:Sterling & Blake Trading Co.;Procurement
+TITLE:Procurement Director
+EMAIL;type=INTERNET;type=WORK:m.thompson@sterlingblake.com
+EMAIL;type=INTERNET;type=HOME:m.thompson@gmail.com
+TEL;type=WORK,VOICE:+1 212-555-0142
+TEL;type=CELL,VOICE:+1 212-555-0199
+TEL;type=WHATSAPP:+1 212-555-0142
+ADR;type=WORK:;;228 Park Ave S; Suite 400; New York; NY 10003; USA
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Jessica Alvarez
+N:Alvarez;Jessica;;;
+ORG:Northwind Analytics;Operations
+TITLE:VP Operations
+EMAIL;type=INTERNET;type=WORK:j.alvarez@northwindanalytics.io
+TEL;type=WORK,VOICE:+1 512-555-0173
+TEL;type=WHATSAPP:+1 512-555-0173
+ADR;type=WORK:;;301 Congress Ave; Suite 1200; Austin; TX 78701; USA
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Rachel Kim
+N:Kim;Rachel;;;
+ORG:Maple & Pine Interiors;Design
+TITLE:Studio Director
+EMAIL;type=INTERNET;type=WORK:rachel@mapleandpine.com
+EMAIL;type=INTERNET;type=HOME:rachel.kim.design@outlook.com
+TEL;type=WORK,VOICE:+1 206-555-0178
+TEL;type=CELL,VOICE:+1 206-555-0180
+TEL;type=WHATSAPP:+1 206-555-0178
+ADR;type=WORK:;;413 Pine St; Floor 5; Seattle; WA 98101; USA
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Oliver Hartley
+N:Hartley;Oliver;;;
+ORG:Meridian Labs;Procurement
+TITLE:Head of Procurement
+EMAIL;type=INTERNET;type=WORK:o.hartley@meridianlabs.co.uk
+EMAIL;type=INTERNET;type=HOME:oliver.hartley@protonmail.com
+TEL;type=WORK,VOICE:+44 20 7946 0233
+TEL;type=CELL,VOICE:+44 20 7946 0290
+TEL;type=WHATSAPP:+44 20 7946 0233
+ADR;type=WORK:;;45 Farringdon Rd; Clerkenwell; London EC1M 3JP; United Kingdom
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:James Whitfield
+N:Whitfield;James;;;
+ORG:Silverline IT Services;IT Services
+TITLE:Service Desk Lead
+EMAIL;type=INTERNET;type=WORK:j.whitfield@silverlineit.co.uk
+TEL;type=WORK,VOICE:+44 161 555 0184
+TEL;type=WHATSAPP:+44 161 555 0184
+ADR;type=WORK:;;1 St Peter's Square; Manchester M2 3DE; United Kingdom
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Klaus Bergmann
+N:Bergmann;Klaus;;;
+ORG:Rheinwerk Logistik GmbH;Logistics
+TITLE:Export Director
+EMAIL;type=INTERNET;type=WORK:k.bergmann@rheinwerk.de
+EMAIL;type=INTERNET;type=HOME:klaus.bergmann@web.de
+TEL;type=WORK,VOICE:+49 40 5550118
+TEL;type=CELL,VOICE:+49 170 5550192
+TEL;type=WHATSAPP:+49 170 5550192
+ADR;type=WORK:;;Hafenstraße 12; 20359 Hamburg; Germany
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Sophie Wagner
+N:Wagner;Sophie;;;
+ORG:Berlin Fintech Hub;Finance
+TITLE:Finance Controller
+EMAIL;type=INTERNET;type=WORK:sophie.wagner@berlinfintech.de
+TEL;type=WORK,VOICE:+49 30 88890145
+TEL;type=WHATSAPP:+49 30 88890145
+ADR;type=WORK:;;Friedrichstraße 68; 10117 Berlin; Germany
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Camille Laurent
+N:Laurent;Camille;;;
+ORG:Aurora Hospitality SA;Events
+TITLE:Events Director
+EMAIL;type=INTERNET;type=WORK:c.laurent@aurorahospitality.fr
+EMAIL;type=INTERNET;type=HOME:camille.laurent@laposte.net
+TEL;type=WORK,VOICE:+33 1 55 55 01 93
+TEL;type=CELL,VOICE:+33 6 55 55 01 12
+TEL;type=WHATSAPP:+33 6 55 55 01 12
+ADR;type=WORK:;;18 Rue de Rivoli; 75004 Paris; France
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Yuki Tanaka
+N:Tanaka;Yuki;;;
+ORG:Kanto Office Supply K.K.;Sales
+TITLE:Sales Director
+EMAIL;type=INTERNET;type=WORK:tanaka@kanto-officesupply.co.jp
+EMAIL;type=INTERNET;type=HOME:yuki.tanaka@tokyo-biz.jp
+TEL;type=WORK,VOICE:+81 3-5550-1045
+TEL;type=CELL,VOICE:+81 90-5550-1088
+TEL;type=WHATSAPP:+81 90-5550-1088
+ADR;type=WORK:;;2-11-3 Meguro; Meguro-ku; Tokyo 153-0063; Japan
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Kenji Sato
+N:Sato;Kenji;;;
+ORG:Osaka BioTech Labs;Research & Development
+TITLE:Senior Lead Scientist
+EMAIL;type=INTERNET;type=WORK:kenji.sato@osakamed.jp
+TEL;type=WORK,VOICE:+81 6-5550-2091
+TEL;type=WHATSAPP:+81 6-5550-2091
+ADR;type=WORK:;;1-4-2 Chuo-ku; Osaka 541-0041; Japan
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Wei Ling Tan
+N:Tan;Ling;Wei;;;
+ORG:Sentosa Retail Group;Retail Operations
+TITLE:Retail Director
+EMAIL;type=INTERNET;type=WORK:weiling@sentosaretail.com.sg
+EMAIL;type=INTERNET;type=HOME:weiling.tan@singnet.com.sg
+TEL;type=WORK,VOICE:+65 6555 0121
+TEL;type=CELL,VOICE:+65 9123 4567
+TEL;type=WHATSAPP:+65 9123 4567
+ADR;type=WORK:;;9 Raffles Place; #42-01 Republic Plaza; Singapore 048619
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Charlotte Nguyen
+N:Nguyen;Charlotte;;;
+ORG:Bluegum Facilities Pty Ltd;Facilities
+TITLE:Facilities Director
+EMAIL;type=INTERNET;type=WORK:c.nguyen@bluegumfacilities.com.au
+TEL;type=WORK,VOICE:+61 3 5550 1288
+TEL;type=CELL,VOICE:+61 412 345 678
+TEL;type=WHATSAPP:+61 412 345 678
+ADR;type=WORK:;;480 Collins St; Level 18; Melbourne VIC 3000; Australia
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Liam Henderson
+N:Henderson;Liam;;;
+ORG:Pacific Marine Logistics;Fleet Management
+TITLE:Fleet Operations Manager
+EMAIL;type=INTERNET;type=WORK:l.henderson@pacificmarine.com.au
+EMAIL;type=INTERNET;type=HOME:liam.henderson@outlook.com.au
+TEL;type=WORK,VOICE:+61 2 5550 3341
+TEL;type=CELL,VOICE:+61 423 456 789
+TEL;type=WHATSAPP:+61 423 456 789
+ADR;type=WORK:;;100 Barangaroo Ave; Sydney NSW 2000; Australia
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Patricia McLeod
+N:McLeod;Patricia;;;
+ORG:Bridgewater Health Group;Administration
+TITLE:Clinic Administrator
+EMAIL;type=INTERNET;type=WORK:p.mcleod@bridgewaterhealth.ca
+TEL;type=WORK,VOICE:+1 416-555-0192
+TEL;type=CELL,VOICE:+1 416-555-0144
+TEL;type=WHATSAPP:+1 416-555-0192
+ADR;type=WORK:;;120 King St W; Suite 1400; Toronto; ON M5H 1T1; Canada
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Omar Al-Farsi
+N:Al-Farsi;Omar;;;
+ORG:Falcon Construction LLC;Projects
+TITLE:Projects Lead
+EMAIL;type=INTERNET;type=WORK:o.alfarsi@falconcon.ae
+EMAIL;type=INTERNET;type=HOME:omar.alfarsi@emirates.net.ae
+TEL;type=WORK,VOICE:+971 4 555 0134
+TEL;type=CELL,VOICE:+971 50 555 0199
+TEL;type=WHATSAPP:+971 50 555 0199
+ADR;type=WORK:;;Level 28; Al Saada Tower; Sheikh Zayed Rd; Dubai; United Arab Emirates
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Pieter van Dijk
+N:Dijk;van;Pieter;;;
+ORG:VanDijk Print & Paper B.V.;Wholesale
+TITLE:Account Manager
+EMAIL;type=INTERNET;type=WORK:p.vandijk@vandijkprint.nl
+TEL;type=WORK,VOICE:+31 10 555 0167
+TEL;type=CELL,VOICE:+31 6 555 01923
+TEL;type=WHATSAPP:+31 6 555 01923
+ADR;type=WORK:;;Wijnhaven 61; 3011 WJ Rotterdam; Netherlands
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Erik Lindqvist
+N:Lindqvist;Erik;;;
+ORG:Nordic Compliance Partners;Advisory
+TITLE:Managing Partner
+EMAIL;type=INTERNET;type=WORK:erik@nordiccompliance.se
+EMAIL;type=INTERNET;type=HOME:erik.lindqvist@telia.com
+TEL;type=WORK,VOICE:+46 8 555 01029
+TEL;type=CELL,VOICE:+46 70 555 0182
+TEL;type=WHATSAPP:+46 70 555 0182
+ADR;type=WORK:;;Kungsgatan 8; 111 35 Stockholm; Sweden
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Gabriela Souza
+N:Souza;Gabriela;;;
+ORG:Copacabana Events Ltda;Production
+TITLE:Executive Producer
+EMAIL;type=INTERNET;type=WORK:gabriela@copacabanaevents.com.br
+EMAIL;type=INTERNET;type=HOME:gabriela.souza@uol.com.br
+TEL;type=WORK,VOICE:+55 11 5550-1166
+TEL;type=CELL,VOICE:+55 11 98888-1122
+TEL;type=WHATSAPP:+55 11 98888-1122
+ADR;type=WORK:;;Av. Paulista 1000; 14º Andar; São Paulo SP 01310-100; Brazil
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Minho Park
+N:Park;Minho;;;
+ORG:Hanok Foods Co.;Distribution
+TITLE:Distribution Director
+EMAIL;type=INTERNET;type=WORK:minho.park@hanokfoods.co.kr
+TEL;type=WORK,VOICE:+82 2-555-0145
+TEL;type=CELL,VOICE:+82 10-5555-0199
+TEL;type=WHATSAPP:+82 10-5555-0199
+ADR;type=WORK:;;55 Jong-ro; Jongno-gu; Seoul 03111; South Korea
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Beatrix von Bergen
+N:Bergen;von;Beatrix;;;
+ORG:Geneva Private Wealth SA;Asset Management
+TITLE:Senior Portfolio Manager
+EMAIL;type=INTERNET;type=WORK:b.vonbergen@genevacapital.ch
+EMAIL;type=INTERNET;type=HOME:beatrix.vb@bluewin.ch
+TEL;type=WORK,VOICE:+41 22 555 0177
+TEL;type=CELL,VOICE:+41 79 555 0188
+TEL;type=WHATSAPP:+41 79 555 0188
+ADR;type=WORK:;;Rue du Rhône 42; 1204 Geneva; Switzerland
+END:VCARD
+
